@@ -1,0 +1,3 @@
+[submodule "Ariawase"]
+	path = Ariawase
+	url = git@github.com:kmizu/Ariawase.git
