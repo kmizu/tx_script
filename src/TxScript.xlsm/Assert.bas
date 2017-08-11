@@ -13,6 +13,6 @@ Sub IsTrue(expectedTrue As Boolean)
     End If
 End Sub
 
-Sub Done()
-  MsgBox "Tests succeed"
+Sub Done(Message As String)
+  MsgBox Message
 End Sub

@@ -1,0 +1,1 @@
+cscript vbac.wsf %*

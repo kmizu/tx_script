@@ -1,4 +1,4 @@
-Attribute VB_Name = "Constants"
+Attribute VB_Name = "Constant"
 Option Explicit
 Enum TokenType
   TInt

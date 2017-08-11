@@ -1,13 +1,13 @@
-Attribute VB_Name = "UnitTests"
+Attribute VB_Name = "UnitTest"
 Option Explicit
-Sub Main()
-  TestTokenizer
-  TestEvaluator
-  TestBuffer
-  Assert.Done
+Sub Run()
+  TestTokenizer "Test Tokenizer"
+  TestEvaluator "Test Evaluator"
+  TestBuffer "Test Buffer"
+  Assert.Done "Test succeed"
 End Sub
 
-Sub TestTokenizer()
+Sub TestTokenizer(ByVal Description As String)
   Dim Tokenizer, Token 'Suppress automatic capitalize/decapitalize conversion
 
   Dim aTokenizer As Variant
@@ -41,7 +41,7 @@ Sub TestTokenizer()
   Assert.IsEqualTo TokenType.TLParen, aToken.TokenType
 End Sub
 
-Sub TestEvaluator()
+Sub TestEvaluator(Description As String)
     Dim aParser As Parser
     Dim anExpression As Variant
     Dim anEvaluator As Evaluator
@@ -59,7 +59,7 @@ Sub TestEvaluator()
     Assert.IsEqualTo 9, aValue
 End Sub
 
-Sub TestBuffer()
+Sub TestBuffer(ByVal Description As String)
     Dim aBuffer As buffer
     Set aBuffer = Objects.NewBuffer()
     aBuffer.Append "A"

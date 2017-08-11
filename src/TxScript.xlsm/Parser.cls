@@ -54,12 +54,12 @@ Public Function Additive() As Variant
             Dim Lhs, Rhs As Variant
             Set Lhs = result
             Set Rhs = Multitive()
-            Set result = Objects.NewBinaryExpression(OpType.OpPlus, Lhs, Rhs)
+            Set result = AST.NewBinaryExpression(OpType.OpPlus, Lhs, Rhs)
         ElseIf la.TokenType = TokenType.TMinus Then
             Tokenizer_.Consume TokenType.TMinus
             Set Lhs = result
             Set Rhs = Multitive()
-            Set result = Objects.NewBinaryExpression(OpType.OpMinus, Lhs, Rhs)
+            Set result = AST.NewBinaryExpression(OpType.OpMinus, Lhs, Rhs)
         Else
             continuable = False
         End If
@@ -75,10 +75,10 @@ Public Function Multitive() As Variant
         Dim la As Token:  Set la = Tokenizer_.Lookahead()
         If la.TokenType = TokenType.TStar Then
             Tokenizer_.Consume TokenType.TStar
-            Set result = Objects.NewBinaryExpression(OpType.OpMultiply, result, Primary())
+            Set result = AST.NewBinaryExpression(OpType.OpMultiply, result, Primary())
         ElseIf la.TokenType = TokenType.TSlash Then
             Tokenizer_.Consume TokenType.TSlash
-            Set result = Objects.NewBinaryExpression(OpType.OpDivide, result, Primary())
+            Set result = AST.NewBinaryExpression(OpType.OpDivide, result, Primary())
         Else
             continuable = False
         End If
@@ -95,7 +95,7 @@ Public Function Primary() As Variant
         Tokenizer_.Consume TokenType.TRParen
     ElseIf la.TokenType = TokenType.TInt Then
         Tokenizer_.Consume TokenType.TInt
-        Set result = Objects.NewIntNode(la.Value)
+        Set result = AST.NewIntNode(la.Value)
     ElseIf la.TokenType = TokenType.TName Then
         Dim name As String
         name = la.Value
@@ -104,9 +104,9 @@ Public Function Primary() As Variant
         If la.TokenType = TokenType.TEQ Then
             Tokenizer_.Consume TokenType.TEQ
             Dim expr As Variant: Set expr = Expression()
-            Set result = Objects.NewAssignment(name, expr)
+            Set result = AST.NewAssignment(name, expr)
         Else
-            Set result = Objects.NewName(name)
+            Set result = AST.NewName(name)
         End If
     Else
         Exception.Raise "( or Integer is expected"
