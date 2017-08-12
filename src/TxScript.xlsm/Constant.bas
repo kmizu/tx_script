@@ -1,27 +1,32 @@
 Attribute VB_Name = "Constant"
 Option Explicit
 Enum TokenType
-  TInt
-TDouble
-  TName
-  TString
-  TLParen
-  TRParen
-  TSemicolon
-  TColon
-  TPlus
-  TMinus
-  TStar
-  TSlash
-  TIF
-  TELSE
-  TDEF
-  TEQ
-  TLT
-  TGT
-  TLTE
-  TGTE
-  TEOF
+    TInt
+    TDouble
+    TName
+    TString
+    TLParen
+    TRParen
+    TSemicolon
+    TColon
+    TPlus
+    TMinus
+    TStar
+    TSlash
+    TIF
+    TELSE
+    TDEF
+    TEQ
+    TLT
+    TGT
+    TLTE
+    TGTE
+    TEOF
+End Enum
+
+Enum TxValueTag
+    TAG_INT
+    TAG_STRING
 End Enum
 
 Enum ASTTag

@@ -10,3 +10,4 @@ Attribute VB_Exposed = True
 Public Function ToString() As String
     ' Implemented by implementation classes
 End Function
+
