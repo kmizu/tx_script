@@ -39,10 +39,18 @@ Function Evaluate(ByVal Node As Variant) As Variant
             Dim aNode As Assignment, result As Variant
             Set aNode = Node
             result = Evaluate(aNode.Expression)
-            Environment_.Update aNode.name, result
+            Environment_.Update aNode.Name, result
+            Evaluate = result
+        Case ASTTag.TAG_FUNCTION_CALL
+            Dim fNode As FunctionCall, param As Variant
+            Set fNode = Node
+            param = Evaluate(fNode.Arg)
+            Assert.IsEqualTo "println", fNode.Name 'Currently, only println function is supported
+            Debug.Print param
+            result = 1
             Evaluate = result
         Case ASTTag.TAG_NAME
-            Dim nNode As name, result2 As Variant
+            Dim nNode As Name, result2 As Variant
             Set nNode = Node
             result2 = Environment_.Lookup(nNode.Value)
             Evaluate = result2

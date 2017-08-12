@@ -7,16 +7,22 @@ Function NewBinaryExpression(ByVal OpType As Integer, ByVal Lhs As Variant, ByVa
     Set NewBinaryExpression = newObject
 End Function
 
-Function NewName(ByVal Value As String) As name
-    Dim newObject As New name
+Function NewName(ByVal Value As String) As Name
+    Dim newObject As New Name
     newObject.Initialize Value
     Set NewName = newObject
 End Function
 
-Function NewAssignment(ByVal name As String, ByVal Expression As Variant) As Assignment
+Function NewAssignment(ByVal Name As String, ByVal Expression As Variant) As Assignment
     Dim newObject As New Assignment
-    newObject.Initialize name, Expression
+    newObject.Initialize Name, Expression
     Set NewAssignment = newObject
+End Function
+
+Function NewFunctionCall(ByVal Name As String, ByVal Arg As Variant) As FunctionCall
+    Dim newObject As New FunctionCall
+    newObject.Initialize Name, Arg
+    Set NewFunctionCall = newObject
 End Function
 
 Function NewIntNode(ByVal Value As Integer) As IntNode

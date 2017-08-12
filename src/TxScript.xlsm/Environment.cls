@@ -13,11 +13,11 @@ Public Sub Initialize()
     Set Dictionary_ = CreateObject("Scripting.Dictionary")
 End Sub
 
-Public Function Lookup(name As String) As Variant
-    Lookup = Dictionary_.Item(name)
+Public Function Lookup(Name As String) As Variant
+    Lookup = Dictionary_.Item(Name)
 End Function
 
-Public Sub Update(name As String, Value As Variant)
-    Dictionary_.Add name, Value
+Public Sub Update(Name As String, Value As Variant)
+    Dictionary_.Add Name, Value
 End Sub
 

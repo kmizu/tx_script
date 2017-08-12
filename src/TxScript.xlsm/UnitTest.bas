@@ -49,13 +49,13 @@ Sub TestEvaluator(Description As String)
     Dim expressions As buffer
     Dim i As Integer
     
-    Set aParser = Objects.NewParser(Objects.NewTokenizer("a = (1 + 2) * 3; a;"))
+    Set aParser = Objects.NewParser(Objects.NewTokenizer("a = (1 + 2) * 3; println(a);"))
     Set expressions = aParser.Lines()
     Set anEvaluator = Objects.NewEvaluator()
     For i = 1 To expressions.Length
         aValue = anEvaluator.Evaluate(expressions.At(i))
     Next
-    Assert.IsEqualTo 9, aValue
+    Assert.IsEqualTo 1, aValue
 End Sub
 
 Sub TestBuffer(ByVal Description As String)

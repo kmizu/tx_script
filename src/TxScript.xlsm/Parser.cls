@@ -97,16 +97,21 @@ Public Function Primary() As Variant
         Tokenizer_.Consume TokenType.TInt
         Set result = AST.NewIntNode(la.Value)
     ElseIf la.TokenType = TokenType.TName Then
-        Dim name As String
-        name = la.Value
+        Dim Name As String
+        Name = la.Value
         Tokenizer_.Consume TokenType.TName
         Set la = Tokenizer_.Lookahead
         If la.TokenType = TokenType.TEQ Then
             Tokenizer_.Consume TokenType.TEQ
             Dim expr As Variant: Set expr = Expression()
-            Set result = AST.NewAssignment(name, expr)
+            Set result = AST.NewAssignment(Name, expr)
+        ElseIf la.TokenType = TokenType.TLParen Then
+            Tokenizer_.Consume TokenType.TLParen
+            Dim Arg As Variant: Set Arg = Expression()
+            Tokenizer_.Consume TokenType.TRParen
+            Set result = AST.NewFunctionCall(Name, Arg)
         Else
-            Set result = AST.NewName(name)
+            Set result = AST.NewName(Name)
         End If
     Else
         Exception.Raise "( or Integer is expected"
