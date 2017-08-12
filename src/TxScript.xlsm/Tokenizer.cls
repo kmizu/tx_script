@@ -36,9 +36,19 @@ Private Function TokenizeIdentifier() As Token
             found = True
         End If
     Loop
-    Dim result As String:  result = Mid(Source_, start, (current - start))
+    Dim id As String: id = Mid(Source_, start, (current - start))
+    Dim result As Token
+    If id = "if" Then
+        Set result = Objects.NewToken("if", TokenType.TIF)
+    ElseIf id = "def" Then
+        Set result = Objects.NewToken("def", TokenType.TDEF)
+    ElseIf id = "else" Then
+        Set result = Objects.NewToken("else", TokenType.TELSE)
+    Else
+        Set result = Objects.NewToken(id, TokenType.TName)
+    End If
     Position_ = current
-    Set TokenizeIdentifier = Objects.NewToken(result, TokenType.TName)
+    Set TokenizeIdentifier = result
 End Function
 
 Private Function TokenizeInteger() As Token

@@ -13,6 +13,9 @@ TDouble
   TMinus
   TStar
   TSlash
+  TIF
+  TELSE
+  TDEF
   TEQ
   TLT
   TGT
