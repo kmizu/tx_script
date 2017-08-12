@@ -54,7 +54,6 @@ Sub TestEvaluator(Description As String)
     Set anEvaluator = Objects.NewEvaluator()
     For i = 1 To expressions.Length
         aValue = anEvaluator.Evaluate(expressions.At(i))
-        Debug.Print aValue
     Next
     Assert.IsEqualTo 9, aValue
 End Sub

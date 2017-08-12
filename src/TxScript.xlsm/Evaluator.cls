@@ -40,14 +40,11 @@ Function Evaluate(ByVal Node As Variant) As Variant
             Set aNode = Node
             result = Evaluate(aNode.Expression)
             Environment_.Update aNode.name, result
-            Debug.Print "Assign " & result & " To " & aNode.name
             Evaluate = result
         Case ASTTag.TAG_NAME
-            Debug.Print "Name"
             Dim nNode As name, result2 As Variant
             Set nNode = Node
             result2 = Environment_.Lookup(nNode.Value)
-            Debug.Print "Refer" & nNode.Value
             Evaluate = result2
         Case ASTTag.TAG_INT_NODE
             Evaluate = Node.Value
