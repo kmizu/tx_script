@@ -30,3 +30,10 @@ Function NewIntNode(ByVal Value As Integer) As IntNode
     newObject.Initialize Value
     Set NewIntNode = newObject
 End Function
+
+Function NewStringNode(ByVal Value As String) As StringNode
+    Dim newObject As New StringNode
+    newObject.Initialize Value
+    Set NewStringNode = newObject
+End Function
+

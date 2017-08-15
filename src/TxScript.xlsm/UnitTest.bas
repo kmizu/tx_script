@@ -8,6 +8,7 @@ Sub Run()
 End Sub
 
 Sub TestTokenizer(ByVal Description As String)
+  Debug.Print Description
   Dim Tokenizer, Token 'Suppress automatic capitalize/decapitalize conversion
 
   Dim aTokenizer As Variant
@@ -42,6 +43,7 @@ Sub TestTokenizer(ByVal Description As String)
 End Sub
 
 Sub TestEvaluator(Description As String)
+    Debug.Print Description
     Dim aParser As Parser
     Dim anExpression As Variant
     Dim anEvaluator As Evaluator
@@ -53,12 +55,13 @@ Sub TestEvaluator(Description As String)
     Set expressions = aParser.Lines()
     Set anEvaluator = Objects.NewEvaluator()
     For i = 1 To expressions.Length
-        aValue = anEvaluator.Evaluate(expressions.At(i))
+        Set aValue = anEvaluator.Evaluate(expressions.At(i))
     Next
-    Assert.IsEqualTo 1, aValue
+    Assert.IsEqualTo TxValues.NewTxInt(1), aValue
 End Sub
 
 Sub TestBuffer(ByVal Description As String)
+    Debug.Print Description
     Dim aBuffer As buffer
     Set aBuffer = Objects.NewBuffer()
     aBuffer.Append "A"

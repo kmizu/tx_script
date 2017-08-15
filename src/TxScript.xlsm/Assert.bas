@@ -2,8 +2,14 @@ Attribute VB_Name = "Assert"
 Option Explicit
 
 Sub IsEqualTo(expected As Variant, actual As Variant)
-    If expected <> actual Then
-        Err.Raise 513, Description:="Expected: " & expected & " Actual: " & actual
+    If IsObject(expected) Then
+        If Not expected.Equals(actual) Then
+            Err.Raise 513, Description:="Expected: " & expected.ToString() & " Actual: " & actual.ToString()
+        End If
+    Else
+        If expected <> actual Then
+            Err.Raise 513, Description:="Expected: " & expected & " Actual: " & actual
+        End If
     End If
 End Sub
 

@@ -96,6 +96,9 @@ Public Function Primary() As Variant
     ElseIf la.TokenType = TokenType.TInt Then
         Tokenizer_.Consume TokenType.TInt
         Set result = AST.NewIntNode(la.Value)
+    ElseIf la.TokenType = TokenType.TString Then
+        Tokenizer_.Consume TokenType.TString
+        Set result = AST.NewStringNode(la.Value)
     ElseIf la.TokenType = TokenType.TName Then
         Dim Name As String
         Name = la.Value

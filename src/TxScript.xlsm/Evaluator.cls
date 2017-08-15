@@ -11,51 +11,76 @@ Option Explicit
 
 Private Environment_ As Environment
 
-Function Evaluate(ByVal Node As Variant) As Variant
+Function Evaluate(ByVal Node As Variant) As ITxValue
     Select Case Node.Tag
         Case ASTTag.TAG_BINARY_EXPRESSION
             Dim bNode As BinaryExpression
             Set bNode = Node
-            Dim l, r As Variant
+            Dim l, r As ITxValue
+            Dim ltag, rtag As Integer
             Select Case bNode.OpType
                 Case OpType.OpPlus
-                    l = Evaluate(bNode.Lhs)
-                    r = Evaluate(bNode.Rhs)
-                    Evaluate = l + r
+                    Set l = Evaluate(bNode.Lhs)
+                    Set r = Evaluate(bNode.Rhs)
+                    If l.ValueTag = TxValueTag.TAG_INT And r.ValueTag = TxValueTag.TAG_INT Then
+                        Dim lInt As TxInt: Set lInt = l
+                        Dim rInt As TxInt: Set rInt = r
+                        Set Evaluate = TxValues.NewTxInt(lInt.Value + rInt.Value)
+                    Else
+                        Exception.Raise "incompatible types: operands must be Int"
+                    End If
                 Case OpType.OpMinus
-                    l = Evaluate(bNode.Lhs)
-                    r = Evaluate(bNode.Rhs)
-                    Evaluate = l - r
+                    Set l = Evaluate(bNode.Lhs)
+                    Set r = Evaluate(bNode.Rhs)
+                    If l.ValueTag = TxValueTag.TAG_INT And r.ValueTag = TxValueTag.TAG_INT Then
+                        Set lInt = l
+                        Set rInt = r
+                        Set Evaluate = TxValues.NewTxInt(lInt.Value - rInt.Value)
+                    Else
+                        Exception.Raise "incompatible types: operands must be Int"
+                    End If
                 Case OpType.OpMultiply
-                    l = Evaluate(bNode.Lhs)
-                    r = Evaluate(bNode.Rhs)
-                    Evaluate = l * r
+                    Set l = Evaluate(bNode.Lhs)
+                    Set r = Evaluate(bNode.Rhs)
+                    If l.ValueTag = TxValueTag.TAG_INT And r.ValueTag = TxValueTag.TAG_INT Then
+                        Set lInt = l
+                        Set rInt = r
+                        Set Evaluate = TxValues.NewTxInt(lInt.Value * rInt.Value)
+                    Else
+                        Exception.Raise "incompatible types: operands must be Int"
+                    End If
                 Case OpType.OpDivide
-                    l = Evaluate(bNode.Lhs)
-                    r = Evaluate(bNode.Rhs)
+                    Set l = Evaluate(bNode.Lhs)
+                    Set r = Evaluate(bNode.Rhs)
                     Evaluate = l / r
+                    If l.ValueTag = TxValueTag.TAG_INT And r.ValueTag = TxValueTag.TAG_INT Then
+                        Set lInt = l
+                        Set rInt = r
+                        Set Evaluate = TxValues.NewTxInt(lInt.Value / rInt.Value)
+                    Else
+                        Exception.Raise "incompatible types: operands must be Int"
+                    End If
             End Select
         Case ASTTag.TAG_ASSIGNMENT
-            Dim aNode As Assignment, result As Variant
+            Dim aNode As Assignment, result As ITxValue
             Set aNode = Node
-            result = Evaluate(aNode.Expression)
+            Set result = Evaluate(aNode.Expression)
             Environment_.Update aNode.Name, result
-            Evaluate = result
+            Set Evaluate = result
         Case ASTTag.TAG_FUNCTION_CALL
-            Dim fNode As FunctionCall, param As Variant
+            Dim fNode As FunctionCall, param As ITxValue
             Set fNode = Node
-            param = Evaluate(fNode.Arg)
+            Set param = Evaluate(fNode.Arg)
             Assert.IsEqualTo "println", fNode.Name 'Currently, only println function is supported
-            Debug.Print param
-            result = 1
-            Evaluate = result
+            Set Evaluate = TxValues.NewTxInt(1)
         Case ASTTag.TAG_NAME
-            Dim nNode As Name, result2 As Variant
+            Dim nNode As Name
             Set nNode = Node
-            result2 = Environment_.Lookup(nNode.Value)
-            Evaluate = result2
+            Set Evaluate = Environment_.Lookup(nNode.Value)
+        Case ASTTag.TAG_STRING_NODE
+            Set Evaluate = TxValues.NewTxString(Node.Value)
         Case ASTTag.TAG_INT_NODE
-            Evaluate = Node.Value
+            Set Evaluate = TxValues.NewTxInt(Node.Value)
     End Select
 End Function
 

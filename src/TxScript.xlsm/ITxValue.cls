@@ -13,3 +13,7 @@ Public Property Get ValueTag() As Integer
     ' Implemented by subclasses
 End Property
 
+Public Function ToString() As String
+    ' Implemented by subclasses
+End Function
+

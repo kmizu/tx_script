@@ -24,6 +24,24 @@ Public Property Get Value() As Integer
     Value = Value_
 End Property
 
+Public Function ITxValue_ToString() As String
+    ITxValue_ToString = "" & Value_ & ""
+End Function
+
+Public Function Equals(Obj As Variant) As Boolean
+    Dim that As TxInt
+    If Obj.ValueTag = TxValueTag.TAG_INT Then
+        Set that = Obj
+        Equals = Me.Value = that.Value
+    Else
+        Equals = False
+    End If
+End Function
+
+Public Function ToString() As String
+    ToString = ITxValue_ToString()
+End Function
+
 Public Sub Initialize(ByVal Value As Integer)
     Value_ = Value
 End Sub

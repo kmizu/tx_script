@@ -35,6 +35,7 @@ Enum ASTTag
     TAG_ASSIGNMENT
     TAG_FUNCTION_CALL
     TAG_INT_NODE
+    TAG_STRING_NODE
 End Enum
 
 Enum OpType
